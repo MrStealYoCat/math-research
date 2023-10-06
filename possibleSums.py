@@ -23,9 +23,9 @@ def permutations(iterable):
         else:
             return
 
-A = 10
-B = 100000
-with cp.cuda.Device(1):
+A = 200
+B = 300
+with cp.cuda.Device(0):
     all_pot_sums = cp.arange(B-11) + 11
     calculated_sums = cp.array([])
 
@@ -56,12 +56,12 @@ with cp.cuda.Device(1):
     impossible_sums = cp.setdiff1d(all_pot_sums, calculated_sums)
 
     possible_sums = cp.setdiff1d(all_pot_sums, impossible_sums)
-    print(possible_sums)
+    print(calculated_sums)
     print("{0} seconds for {1} numbers".format(round(time.time() - start_time, 5), B))
 # possible_sums = cp.setdiff1d(all_pot_sums, impossible_sums)
 # file = open("impossibleSums.txt", "w")
 # for x in impossible_sums:
 #     file.write("{}\n".format(x))
 file = open("possibleSums.txt", "w")
-for x in possible_sums:
+for x in calculated_sums:
     file.write("{}\n".format(x))
